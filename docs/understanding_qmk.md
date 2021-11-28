@@ -4,7 +4,7 @@ This document attempts to explain how the QMK firmware works from a very high le
 
 * [Introduction](getting_started_introduction.md)
 * [How Keyboards Work](how_keyboards_work.md)
-* [FAQ](faq.md)
+* [FAQ](faq_general.md)
 
 ## Startup
 
@@ -22,15 +22,14 @@ This section of code is called "The Main Loop" because it's responsible for loop
     keyboard_task();
 ```
 
-This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LED's on and off.
+This is where all the keyboard specific functionality is dispatched. The source code for `keyboard_task()` can be found in [tmk_core/common/keyboard.c](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/tmk_core/common/keyboard.c#L216), and it is responsible for detecting changes in the matrix and turning status LEDs on and off.
 
 Within `keyboard_task()` you'll find code to handle:
 
 * [Matrix Scanning](#matrix-scanning)
 * Mouse Handling
 * Serial Link(s)
-* Visualizer
-* Keyboard status LED's (Caps Lock, Num Lock, Scroll Lock)
+* Keyboard status LEDs (Caps Lock, Num Lock, Scroll Lock)
 
 #### Matrix Scanning
 
@@ -67,10 +66,10 @@ At the keyboard level we define a C macro (typically named `LAYOUT()`) which map
     k30, k31, k32, k33, \
     k40,      k42 \
 ) { \
-    { k00, k01, k02, k03, }, \
-    { k10, k11, k12, k13, }, \
-    { k20, k21, k22, KC_NO, }, \
-    { k30, k31, k32, k33, }, \
+    { k00, k01,   k02, k03   }, \
+    { k10, k11,   k12, k13   }, \
+    { k20, k21,   k22, KC_NO }, \
+    { k30, k31,   k32, k33   }, \
     { k40, KC_NO, k42, KC_NO } \
 }
 ```
@@ -83,14 +82,15 @@ You can also use this macro to handle unusual matrix layouts, for example the [C
 
 At the keymap level we make use of our `LAYOUT()` macro above to map keycodes to physical locations to matrix locations. It looks like this:
 
-```
+```c
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[0] = LAYOUT(
-  KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, \
-  KC_P7,   KC_P8,   KC_P9,   KC_PPLS, \
-  KC_P4,   KC_P5,   KC_P6, \
-  KC_P1,   KC_P2,   KC_P3,   KC_PENT, \
-  KC_P0,            KC_PDOT)
+    [0] = LAYOUT(
+        KC_NUM,  KC_PSLS, KC_PAST, KC_PMNS,
+        KC_P7,   KC_P8,   KC_P9,   KC_PPLS,
+        KC_P4,   KC_P5,   KC_P6,
+        KC_P1,   KC_P2,   KC_P3,   KC_PENT,
+        KC_P0,            KC_PDOT
+    )
 }
 ```
 
@@ -124,7 +124,7 @@ And when our current scan completes it will look like this:
 }
 ```
 
-Comparing against our keymap we can see that the pressed key is KC_NLCK. From here we dispatch to the `process_record` set of functions.
+Comparing against our keymap we can see that the pressed key is `KC_NUM`. From here we dispatch to the `process_record` set of functions.
 
 <!-- FIXME: Magic happens between here and process_record -->
 
@@ -142,11 +142,11 @@ The `process_record()` function itself is deceptively simple, but hidden within 
     * [`bool process_haptic(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/2cee371bf125a6ec541dd7c5a809573facc7c456/drivers/haptic/haptic.c#L216)
     * [`bool process_record_kb(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/keyboards/clueboard/card/card.c#L20)
       * [`bool process_record_user(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/keyboards/clueboard/card/keymaps/default/keymap.c#L58)
-    * [`bool process_rgb_matrix(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/rgb_matrix.c#L139)
     * [`bool process_midi(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_midi.c#L81)
     * [`bool process_audio(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_audio.c#L19)
     * [`bool process_steno(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_steno.c#L160)
     * [`bool process_music(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_music.c#L114)
+    * [`bool process_key_override(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/5a1b857dea45a17698f6baa7dd1b7a7ea907fb0a/quantum/process_keycode/process_key_override.c#L397)
     * [`bool process_tap_dance(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_tap_dance.c#L141)
     * [`bool process_unicode_common(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_unicode_common.c#L169)
       calls one of:
@@ -157,11 +157,21 @@ The `process_record()` function itself is deceptively simple, but hidden within 
     * [`bool process_combo(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_combo.c#L115)
     * [`bool process_printer(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_printer.c#L77)
     * [`bool process_auto_shift(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_auto_shift.c#L94)
+    * `bool process_dynamic_tapping_term(uint16_t keycode, keyrecord_t *record)`
     * [`bool process_terminal(uint16_t keycode, keyrecord_t *record)`](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/process_keycode/process_terminal.c#L264)
     * [Identify and process Quantum-specific keycodes](https://github.com/qmk/qmk_firmware/blob/e1203a222bb12ab9733916164a000ef3ac48da93/quantum/quantum.c#L291)
 
 At any step during this chain of events a function (such as `process_record_kb()`) can `return false` to halt all further processing.
 
+After this is called, `post_process_record()` is called, which can be used to handle additional cleanup that needs to be run after the keycode is normally handled. 
+
+* [`void post_process_record(keyrecord_t *record)`]()
+  * [`void post_process_record_quantum(keyrecord_t *record)`]()
+    * [Map this record to a keycode]()
+    * [`void post_process_clicky(uint16_t keycode, keyrecord_t *record)`]()
+    * [`void post_process_record_kb(uint16_t keycode, keyrecord_t *record)`]()
+      * [`void post_process_record_user(uint16_t keycode, keyrecord_t *record)`]()
+      
 <!--
 #### Mouse Handling
 
@@ -171,11 +181,7 @@ FIXME: This needs to be written
 
 FIXME: This needs to be written
 
-#### Visualizer
-
-FIXME: This needs to be written
-
-#### Keyboard state LED's (Caps Lock, Num Lock, Scroll Lock)
+#### Keyboard state LEDs (Caps Lock, Num Lock, Scroll Lock)
 
 FIXME: This needs to be written
 

@@ -9,8 +9,8 @@
 #define _DVORAK 2
 #define _LOWER 3
 #define _RAISE 4
-#define _MOUSECURSOR 8
-#define _ADJUST 16
+#define _MOUSECURSOR 5
+#define _ADJUST 6
 
 enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
@@ -193,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-uint32_t layer_state_set_user(uint32_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
@@ -260,11 +260,3 @@ bool music_mask_user(uint16_t keycode) {
       return true;
   }
 }
-
-void matrix_init_user(void) {
-}
-
-
-void matrix_scan_user(void) {
-}
-
