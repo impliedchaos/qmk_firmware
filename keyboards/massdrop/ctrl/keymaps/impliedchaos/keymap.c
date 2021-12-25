@@ -50,6 +50,8 @@ enum unicode_names {
    UENE,     LENE,
    UCCED,    LCCED,
    INTBNG,   IINTBNG,
+   LCB, LWCB,
+   RCB, RWCB,
 
    INVQ, 
    SQUARE,
@@ -118,6 +120,8 @@ const uint32_t PROGMEM unicode_map[] = {
    [UENE]    = 0x00D1, [LENE]    = 0x00F1,
    [UCCED]   = 0x00C7, [LCCED]   = 0x00E7,
    [INTBNG]  = 0x203D, [IINTBNG] = 0x2e18,
+   [LCB]     = 0x300C, [LWCB]    = 0x300E,
+   [RCB]     = 0x300D, [RWCB]    = 0x300F,
 
    [INVQ]    = 0x00BF, 
    [SQUARE]  = 0x00B2,
@@ -177,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, X(RLAXD),X(SMILEY),X(GRIN), X(JOY), X(WINK),X(CRAZY),X(NEUTRAL),X(SILENT),X(MEH), X(SAD),  X(CRY),X(ANGRY),            LENNY  , BEAR   , LODAP  , \
         XP(CGRV,CTLD),XP(IBANG,PRIME),X(SQUARE),X(CUBE),XP(CURRENCY,GBP),X(EURO),XP(QUARTER,CCRT),X(HALF),X(THRQU),X(LSQM),X(RSQM),XP(JPY,EMDASH),XP(MLTPLY,DIVIDE), XXXXXXX,   AMENO  , DUNNO   , TABFLP , \
         XXXXXXX,XP(LADIA,UADIA),XP(LARNG,UARNG),XP(LEACT,UEACT),X(REGTR),XP(LTHRN,UTHRN),XP(LUDIA,UUDIA),XP(LUACT,UUACT),XP(LIACT,UIACT),XP(LOACT,UOACT),XP(LODIA,UODIA),X(LDAQ),X(RDAQ),XP(NOTSIN,BRKNB),   HUGS   , CRZRUN , REPTBL , \
-        _______,XP(LAACT,UAACT),XP(SSHRPS,SCTSIN),XP(LEDIA,UEDIA),X(SKULL),X(FIST), XXXXXXX, XXXXXXX, XP(LIDIA,UIDIA),XP(LOSTR,UOSTR),XP(PILCRW,DEGREE),XP(CACT,CDIA), XXXXXXX, \
+        _______,XP(LAACT,UAACT),XP(SSHRPS,SCTSIN),XP(LEDIA,UEDIA),X(SKULL),X(FIST), XP(LCB,LWCB), XP(RCB,RWCB), XP(LIDIA,UIDIA),XP(LOSTR,UOSTR),XP(PILCRW,DEGREE),XP(CACT,CDIA), XXXXXXX, \
         _______,XP(LAE,UAE),X(POOP),XP(COPYR,CENT),X(NUKE),X(BIOH),XP(LENE,UENE),X(LMU),XP(LCCED,UCCED),XP(INTBNG,IINTBNG),X(INVQ), _______,                              X(ARRU), \
         _______, _______, _______,                   X(EGGPL),                           _______, _______, _______, _______,            X(ARRL), X(ARRD), X(ARRR) \
     ),
@@ -202,7 +206,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
         _______, GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  , GREEN  ,            SPRING , SPRING , SPRING , \
         RED    , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , _______,   SPRING , SPRING , SPRING , \
         _______, BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   , BLUE   ,   SPRING , SPRING , SPRING , \
-        _______, BLUE   , BLUE   , BLUE   , GREEN  , GREEN  , _______, _______, BLUE   , BLUE   , BLUE   , RED    , _______, \
+        _______, BLUE   , BLUE   , BLUE   , GREEN  , GREEN  , PINK   , PINK   , BLUE   , BLUE   , BLUE   , RED    , _______, \
         _______, BLUE   , GREEN  , BLUE   , GREEN  , GREEN  , BLUE   , GREEN  , BLUE   , GREEN  , BLUE   , _______,                              GREEN  , \
         _______, _______, _______,                   GREEN  ,                            _______, _______, _______, _______,            GREEN  , GREEN  , GREEN   \
     },
