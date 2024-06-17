@@ -174,8 +174,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, UC_M_WC, UC_M_WI, UC_M_LN, UC_M_MA, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_MPLY, KC_MSTP, KC_VOLU, \
         XXXXXXX, RGB_SPD, RGB_VAI, RGB_SPI, RGB_HUI, RGB_SAI, XXXXXXX, U_T_AUTO,U_T_AGCR,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KC_MPRV, KC_MNXT, KC_VOLD, \
         KC_CAPS, RGB_RMOD,RGB_VAD, RGB_MOD, RGB_HUD, RGB_SAD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-        _______, RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, MD_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                              XXXXXXX, \
-        _______, _______, _______,                   XXXXXXX,                            _______, _______, _______, _______,            XXXXXXX, XXXXXXX, XXXXXXX \
+        _______, RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, MD_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                              KC_PDOT, \
+        _______, _______, _______,                   XXXXXXX,                            _______, _______, _______, _______,            XXXXXXX, KC_P0  , XXXXXXX \
     ),
     [2] = LAYOUT(
         XXXXXXX, X(RLAXD),X(SMILEY),X(GRIN), X(JOY), X(WINK),X(CRAZY),X(NEUTRAL),X(SILENT),X(MEH), X(SAD),  X(CRY),X(ANGRY),            LENNY  , BEAR   , LODAP  , \
@@ -198,8 +198,8 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
         _______, GREEN  , GREEN  , GREEN  , GREEN  , _______, _______, _______, _______, _______, _______, _______, _______, _______,   CHART  , CHART  , CHART  , \
         _______, BLUE   , CYAN   , BLUE   , YELLOW , MAGENTA, _______, GOLDEN , GOLDEN , _______, _______, _______, _______, _______,   CHART  , CHART  , CHART  , \
         _______, PINK   , CYAN   , PINK   , YELLOW , MAGENTA, _______, _______, _______, _______, _______, _______, _______, \
-        _______, BLUE   , _______, _______, _______, RED    , SPRING , _______, _______, _______, _______, _______,                              _______, \
-        _______, _______, _______,                   _______,                            _______, _______, _______, _______,            _______, _______, _______ \
+        _______, BLUE   , _______, _______, _______, RED    , SPRING , _______, _______, _______, _______, _______,                              WHITE  , \
+        _______, _______, _______,                   _______,                            _______, _______, _______, _______,            _______, WHITE  , _______ \
     },
     // SPRING = Macro, GREEN = Emoji/symbol, BLUE = US Int, RED = US Int combining chars.
     [2] = {
